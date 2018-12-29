@@ -7,7 +7,7 @@ RingCentral Connect Platform is a rich RESTful API platform with more than 70 AP
 ### RingCentral Developer Portal
 To setup a free developer account, click [https://developer/ringcentral.com](here)
 
-### Clone the project
+### Clone - Setup - Run the project
 ```
 git clone https://github.com/ringcentral-tutorials/calllog-visualization-php-demo
 
