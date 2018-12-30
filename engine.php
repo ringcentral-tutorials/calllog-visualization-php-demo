@@ -14,7 +14,7 @@ if (getenv('ENVIRONMENT_MODE') == "sandbox") {
         getenv('CLIENT_SECRET_PROD'), RingCentral\SDK\SDK::SERVER_PRODUCTION);
 }
 $platform = $rcsdk->platform();
-//echo (getenv('ENVIRONMENT_MODE'));
+
 login();
 function login(){
     global $platform;
@@ -23,7 +23,7 @@ function login(){
             $platform->login(getenv('USERNAME_SB'), getenv('EXTENSION_SB'), getenv('PASSWORD_SB'));
         else
             $platform->login(getenv('USERNAME_PROD'), getenv('EXTENSION_PROD'), getenv('PASSWORD_PROD'));
-        //echo(json_encode($_POST));
+        
         readCallLogs();
     }catch (\RingCentral\SDK\Http\ApiException $e) {
         echo($e->getMessage());

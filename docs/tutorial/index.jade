@@ -1,38 +1,33 @@
 .chapter(data-title='Visualize Your Business Communications History')
-.step(data-title='Welcome!', data-file='README.md', data-highlight='1-8')
+.step(data-title='Welcome!', data-file='../README.md', data-highlight='1-8')
   :markdown
     ### Requirements
     * You must have a RingCentral developer account. If you don't have one, click [here](https://developer.ringcentral.com) to create a free developer account.
 
     * You also have to [create a RingCentral app](https://developer.ringcentral.com/library/getting-started.html) with the "ReadCallLog" permission to retrieve the app Client Id and Client Secret for using with this tutorial.
 
-    ### Prerequisite knowledge
-    * We use JQuery to send HTTP requests to our web server. If you are not familiar with JQuery, click [here](https://jquery.com/) to learn more.
-
-    * We use Express framework to build the demo web app. If you are not familiar with Express, click [here](https://expressjs.com/en/starter/installing.html) to learn more.
-
-.step(data-title='Project setup', data-file='README.md', data-highlight='10-19')
+.step(data-title='Project setup', data-file='../README.md', data-highlight='12-22')
   :markdown
-    ### Clone the project from GitHub
+    ### Clone and setup the project from GitHub
     Run the commands shown on the right-hand side to clone the project from GitHub to your local machine.
 
     Browse to the project folder on your local machine and install the dependency libraries.
 
     Copy the dotenv to create the .env.
 
-.step(data-title='Set environment', data-file='dotenv')
+.step(data-title='Set environment', data-file='../dotenv')
   :markdown
     ### Set environment parameters and login credentials
 
-    Open the __.env__ file and specify your app credentials, RingCentral sandbox account's username and password.
+    Open the __.env__ file and specify your app and login credentials.
 
     You are good to run the demo now:
 
-    $ node index.js
+    $ php -S localhost:5000
 
-    Open your browser at http://localhost:3002
+    Open your browser at http://localhost:5000
 
-.step(data-title='Design the Web app UI', data-file='views/index.ejs', data-highlight='39-43')
+.step(data-title='Design the Web app UI', data-file='../index.php', data-highlight='41-45')
   :markdown
     ### Add the From and To date pickers
 
@@ -42,7 +37,7 @@
 
     The call-log API also takes other query configurations, but they are less frequently needed in this tutorial so we hide them to save some space and make them visible when we click the __Show Options__ button.
 
-.step(data-title='Phone number and Extension number', data-file='views/index.ejs', data-highlight='53-56')
+.step(data-title='Phone number and Extension number', data-file='../index.php', data-highlight='55-58')
   :markdown
     ### Add the Phone number and Extension number filters.
 
@@ -54,7 +49,7 @@
 
     [See call-log API reference](https://developer.ringcentral.com/api-docs/latest/index.html#!#RefUserCallLog.html)
 
-.step(data-title='Direction and Type filters', data-file='views/index.ejs', data-highlight='58-69')
+.step(data-title='Direction and Type filters', data-file='../index.php', data-highlight='60-71')
   :markdown
     ### Add the Direction and Type filters.
 
@@ -66,7 +61,7 @@
 
     [See call-log API reference](https://developer.ringcentral.com/api-docs/latest/index.html#!#RefUserCallLog.html)
 
-.step(data-title='Transport and View filters', data-file='views/index.ejs', data-highlight='70-80')
+.step(data-title='Transport and View filters', data-file='../index.php', data-highlight='72-82')
   :markdown
     ### Add the Transport and View filters.
 
@@ -78,7 +73,7 @@
 
     [See call-log API reference](https://developer.ringcentral.com/api-docs/latest/index.html#!#RefUserCallLog.html)
 
-.step(data-title='Blocked and recording calls', data-file='views/index.ejs', data-highlight='81-82')
+.step(data-title='Blocked and recording calls', data-file='../index.php', data-highlight='83-84')
   :markdown
     ### Add the Read blocked and With recording
 
@@ -90,7 +85,7 @@
 
     [See call-log API reference](https://developer.ringcentral.com/api-docs/latest/index.html#!#RefUserCallLog.html)
 
-.step(data-title='Control Access Level', data-file='views/index.ejs', data-highlight='46-50')
+.step(data-title='Control Access Level', data-file='../index.php', data-highlight='48-52')
   :markdown
     ### Add the dropdown list to define the access level
 
@@ -100,45 +95,44 @@
 
     __Note:__ This is not the call-log API's parameter! It will be passed to our server for defining the API's access level.
 
-.step(data-title='Create API query parameters', data-file='public/js/main.js', data-highlight='553-575')
+.step(data-title='Create API query parameters', data-file='../public/js/main.js', data-highlight='552-576')
   :markdown
     ### Create API query parameters - Client side
 
-    We detect specified parameters and make a POST request to send them to our server side.
+    We input parameters and make a GET request to send them to our server side.
 
-    Since the access level parameter is our own control, we pass the parameter to the POST query path.
-
-    ```
+    ```js
     var url = "readlogs?access=" + $('#access_level').val();
     ```
 
-.step(data-title='Implement server code', data-file='engine.js', data-highlight='4-10')
+.step(data-title='Implement server code', data-file='../engine.php', data-highlight='8-16')
   :markdown
-    ### Instantiate the RingCentral Node JS SDK
+    ### Instantiate the RingCentral PHP SDK
 
-    First, we create the SDK instance `rcsdk` and initialize it with the app client Id and client Secret.
+    First, we create the SDK instance `$rcsdk` and initialize it with the app client Id and client Secret.
 
-    Then we call the `rcsdk.platform()` function to get the instance of the platform component. The `platform` instance will be used later to login and call RingCentral APIs.
+    Then we call the `$rcsdk->platform()` function to get the instance of the $platform component. The `$platform` instance will be used later to login and call RingCentral APIs.
 
-.step(data-title='Login to RingCentral account', data-file='engine.js', data-highlight='13-23')
+.step(data-title='Login to RingCentral account', data-file='../engine.php', data-highlight='18-31')
   :markdown
     ### Login to RingCentral account
 
-    To login RingCentral account, we call the `platform.login()` function with the account's username and password predefined in the _.env_ file.
+    To login RingCentral account, we call the `$platform->login()` function with the account's username and password predefined in the _.env_ file.
 
-.step(data-title='Call the call-log API', data-file='engine.js', data-highlight='25-32')
+.step(data-title='Call the call-log API', data-file='../engine.php', data-highlight='33-55')
   :markdown
     ### Call the call-log API
 
-    When the server readCallLogs() function is called, we detects if the request is made to access the account level or the extension level then we define the endpoint accordingly.
+    After logged in successfully, we call the readCallLogs() function and we detect if the request is made to access the account level or the extension level then we define the endpoint accordingly.
 
-    We receive the call-log API's query parameters from the client as a JSON object in the __req.body__. We just use the __platform__ instance to call the call-log API as highlighted below:
+    We receive the call-log API's query parameters from the client as a JSON object in the __$_REQUEST['params']__. We just use the __$platform__ instance to call the call-log API as highlighted below:
 
+    ```php
+    $params = json_decode($_REQUEST['params'], true);
+    $response = $platform->get($endpoint, $params);
     ```
-    platform.get(endpoint, req.body)
-    ```
 
-.step(data-title='Retrieve call log records', data-file='engine.js', data-highlight='33-54')
+.step(data-title='Retrieve call log records', data-file='../engine.php', data-highlight='43-44')
   :markdown
     ### Retrieve call log records
 
@@ -146,15 +140,15 @@
 
     If the call failed, we catch the error and respond to our client with an error message accordingly.
 
-.step(data-title='Parse call log data', data-file='public/js/main.js', data-highlight='576-584')
+.step(data-title='Parse call log data', data-file='../public/js/main.js', data-highlight='576-584')
   :markdown
     ### Parse call log data
 
     Upon the arrival of the response from our server, we check the response to see if it is an error or not.
 
-    If the response is call log data, we create a __CallLogsData__ object passing along the call log data. The __CallLogsData__ object is a class which parses the call log data and process the information to make them ready for displaying on graphs.
+    If the response is call log data, we create a __CallLogsData__ object passing along the call log data. The __CallLogsData__ object is a library which parses the call log data and process the information to make them ready for displaying on graphs.
 
-.step(data-title='Process call log data', data-file='public/js/main.js', data-highlight='62-100')
+.step(data-title='Process call log data', data-file='../public/js/main.js', data-highlight='62-102')
   :markdown
     ### Process call log data
 
@@ -164,7 +158,7 @@
 
     To display overall calls results and actions, we implement a function ____addItemToExistingList()__ to parse and keep the information in the following arrays:
 
-    ```
+    ```js
     this.faxInboundActions = []
     this.faxOutboundActions = []
 
@@ -178,31 +172,31 @@
     this.voiceOutboundResults = []
     ```
 
-.step(data-title='Process call location', data-file='public/js/main.js', data-highlight='101-132')
+.step(data-title='Process call location', data-file='../public/js/main.js', data-highlight='103-134')
   :markdown
     ### Process call location
 
     To prepare for displaying call location on the Google map, we parse the location data and map the call location and count number in the following arrays:
 
-    ```
+    ```js
     this.inboundCallLocations = []
     this.outboundCallLocations = []
     ```
 
-.step(data-title='Generate calls density data', data-file='public/js/main.js', data-highlight='149-180')
+.step(data-title='Generate calls density data', data-file='../public/js/main.js', data-highlight='151-182')
   :markdown
     ### Generate calls density data
 
     To sketch calls density around the clock, we implement the ____createCallsDensity()__ function to parse the __startTime__ of each call, convert it to local time then map it to the 24-hour time scale.
 
-    ```
+    ```js
     this.timeSliceInbound = new Array(24)
     this.timeSliceOutbound = new Array(24)
     this.timeSliceMissedCalls = new Array(24)
     this.timeSliceVoicemails = new Array(24)
     ```
 
-.step(data-title='Display information on charts', data-file='public/js/main.js', data-highlight='477-550')
+.step(data-title='Display information on charts', data-file='../public/js/main.js', data-highlight='476-549')
   :markdown
     ### Display information on charts
 
